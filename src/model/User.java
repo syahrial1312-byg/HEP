@@ -2,11 +2,7 @@ package model;
 
 import java.util.Scanner;
 
-public class User {
-    //private UUID id;
-    private String nama;
-    private String password;
-    private int id;
+public class User extends Person {
     private float luasTanahBangunan;
     
     private int dayaMeteran;
@@ -21,10 +17,8 @@ public class User {
     private float totalBiaya;
 
     
-    public User(int id,String nama, String password,int dayaMeteran,float luasTanahBangunan) {
-        this.id = id;
-        this.nama = nama;
-        this.password = password;
+    public User(String username,String password,int dayaMeteran,float luasTanahBangunan) {
+        super(username,password);
         this.dayaMeteran = dayaMeteran;
         this.luasTanahBangunan = luasTanahBangunan;
         
@@ -37,24 +31,30 @@ public class User {
             }
           
         }
-    
-    public boolean login(String namaUser, String passwordUser) {
-        if (this.nama.equals(namaUser) && this.password.equals(passwordUser)) {
-            System.out.println("Login berhasil!");
-            return true;
-        } else {
-            System.out.println("Login Gagal ! Username atau Password salah.");
-            return false;
-        }
-    }
-    
-    public void tambahBarang(BarangElektronik barang){
+
+        public void tambahBarang(BarangElektronik barang){
         this.barang[jumlahBarang] = barang;
         this.barang[jumlahBarang].setBiaya();
         jumlahBarang++;
     }
-    
-    public void updateBarang(int idBarang,String name,int dayaBarang,float durasi){
+
+    public float getLuasTanahBangunan() {
+        return luasTanahBangunan;
+    }
+
+    public void setLuasTanahBangunan(float luasTanahBangunan) {
+        this.luasTanahBangunan = luasTanahBangunan;
+    }
+
+    public int getDayaMeteran() {
+        return dayaMeteran;
+    }
+
+    public void setDayaMeteran(int dayaMeteran) {
+        this.dayaMeteran = dayaMeteran;
+    }
+
+    public void updateBarang(int idBarang, String name, int dayaBarang, float durasi){
         if (idBarang>=0 && idBarang <=jumlahBarang){
             this.barang[idBarang].setNama(name);
             this.barang[idBarang].setDaya(dayaBarang);
@@ -107,7 +107,7 @@ public class User {
     }
     
     public void validationEfficiencyEnergy(){
-        float ikeBangunan=this.getTotalKwh()/36; //36 ini menunjukan luas bangunan;
+        float ikeBangunan=this.getTotalKwh()/getLuasTanahBangunan(); //36 ini menunjukan luas bangunan;
         
         if (ikeBangunan<=7.92) {
             System.out.println("Intensitas Konsumsi Energi\t: "+ikeBangunan+" kWh/m^2 per bulan");
@@ -127,41 +127,6 @@ public class User {
         }
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNama() {
-        return nama;
-    }
-
-    public void setNama(String nama) {
-        this.nama = nama;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public float getLuasTanahBangunan() {
-        return luasTanahBangunan;
-    }
-
-    public void setLuasTanahBangunan(float luasTanahBangunan) {
-        this.luasTanahBangunan = luasTanahBangunan;
-    }
-
-    public void setDayaMeteran(int dayaMeteran) {
-        this.dayaMeteran = dayaMeteran;
-    }
 
     public void setTotalBiaya(){
         totalBiaya =0;       
@@ -179,10 +144,6 @@ public class User {
         for (int i = 0; i < jumlahBarang; i++) {
             this.persentasePemakaian[i] = (this.barang[i].getKwHPerBarang() / totalKwh) * 100;
         }
-    }
-  
-    public int getDayaMeteran() {
-        return dayaMeteran;
     }
 
     public float getTarifDayaPerKwh() {
@@ -208,9 +169,9 @@ public class User {
     
     public void tampilanDataUser(){
         System.out.println("--------------------------------- Informasi model.User --------------------------------");
-        System.out.println("ID\t\t\t: " + id);
-        System.out.println("Nama\t\t\t: " + nama);
-        System.out.println("Password\t\t: " + password);
+        System.out.println("ID\t\t\t: " + getIdPerson());
+        System.out.println("Nama\t\t\t: " + getUsername());
+        System.out.println("Password\t\t: " + getPasswordPerson());
         System.out.println("Daya dalam KiloWatt\t: " + getDayaMeteran());
         System.out.println("Tarif per KwH\t\t: " + getTarifDayaPerKwh());
         System.out.println("\n");

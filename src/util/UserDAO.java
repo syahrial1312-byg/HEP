@@ -13,9 +13,9 @@ public class UserDAO {
 
             String query = "INSERT INTO user values ('%d','%s','%s','%d','%f')";
             query = String.format(query,
-                    user.getId(),
-                    user.getNama(),
-                    user.getPassword(),
+                    user.getIdPerson(),
+                    user.getUsername(),
+                    user.getPasswordPerson(),
                     user.getDayaMeteran(),
                     user.getLuasTanahBangunan());
             st = con.prepareStatement(query);
@@ -31,8 +31,8 @@ public class UserDAO {
         try {
             con = BaseDAO.getCon();
 
-            String query = "DELETE FROM user Where iduser = %d";
-            query=String.format(query,user.getId());
+            String query = "DELETE FROM users Where id_user = %d";
+            query=String.format(query,user.getIdPerson());
             st = con.prepareStatement(query);
             st.executeUpdate();
             System.out.println("Data telah dihapus");

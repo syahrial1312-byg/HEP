@@ -47,14 +47,6 @@ public class BarangElektronik {
     public float getKwHPerBarang() {
         return kWh;
     }
-    
-    
-//    public String toString(){
-//        return "\nNama Barang\t\t: " + this.nama + "\n" +
-//                "Daya Barang\t\t: " + this.daya + " Watt\n" +
-//                "Lama Pemakaian\t\t: " + this.durasi  + " Jam\n" +
-//                "kwh Barang\t\t: " + this.KwHPerBarang + " KwH";
-//    }
 
     public void setNama(String nama) {
         this.nama = nama;
